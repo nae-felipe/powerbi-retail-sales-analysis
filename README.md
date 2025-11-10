@@ -37,10 +37,32 @@ Power BI dashboard analyzing 5 years of sales data to identify revenue drivers a
 ```dax
 Total Revenue = SUMX(Sales, Sales[Quantity] * RELATED(Products[Unit Price USD]))
 
+Total Orders = DISTINCTCOUNT(Sales[Order Number])
+
+Gross Profit = SUMX(
+    Sales,
+    (RELATED(Products[Unit Price USD]) - RELATED(Products[Unit Cost USD])) * Sales[Quantity]
+)
+
 AOV = DIVIDE([Total Revenue], [Total Orders])
 
+In-Store AOV = DIVIDE(
+    CALCULATE([Total Revenue], Sales[StoreKey] <> 0),
+    CALCULATE([Total Orders], Sales[StoreKey] <> 0),
+    0
+)
+
+Online AOV = DIVIDE(
+    CALCULATE([Total Revenue], Sales[StoreKey] = 0),
+    CALCULATE([Total Orders], Sales[StoreKey] = 0),
+    0
+)
+
 Average Delivery Days = AVERAGEX(
-    FILTER(Sales, NOT(ISBLANK(Sales[Delivery Date])) && NOT(ISBLANK(Sales[Order Date]))),
+    FILTER(
+        Sales,
+        NOT(ISBLANK(Sales[Delivery Date])) && NOT(ISBLANK(Sales[Order Date]))
+    ),
     DATEDIFF(Sales[Order Date], Sales[Delivery Date], DAY)
 )
 ```
