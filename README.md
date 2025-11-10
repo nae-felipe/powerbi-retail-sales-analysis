@@ -88,11 +88,15 @@ Average Delivery Days = AVERAGEX(
 
 ## Project Files
 ```
+powerbi-retail-sales-analysis/
 ├── README.md
 ├── reports/
-│   └── Global_Electronics_Dashboard.pbix
+│   └── powerbi-retail-sales-analysis.pbix
 └── images/
-    └── dashboard_screenshots.png
+    ├── dashboard_screenshot.jpg
+    ├── Data_model.jpg
+    ├── Overview_Recommendations.jpg
+    └── Sales_and_Order_Trends.jpg
 ```
 
 ---
